@@ -6,7 +6,7 @@ module.exports = function(grunt) {
     asdf: {
       all: ['lib/*']
     },
-    qwer: {
+    blog: {
       all: ['*']
     },
     htmlConvert: {
@@ -88,26 +88,34 @@ module.exports = function(grunt) {
   });
 
   
-  grunt.registerMultiTask('qwer', 'Validate files with JSHint.', function() {
-    console.log('zxcvzxcv')
-    //console.log(grunt.file.expand('../defualt.github.com/_posts/*'));
+  grunt.registerMultiTask('blog', 'Validate files with JSHint.', function() {
+    // PLACE THE YYYY-MM-DD-PROJECTNAME.md file into ../defualt.github.com/_posts/
+    // If the blog post already exists, use the pre-existing name and overwrite contents
+    // because there could be a case of the date changing.
+    // This task also replaces strings in the markdown file to fix gh-pages breaking.
+    // gh-pages build was breaking because of Ruby Liquid templating in the .md file.
+    // This was conflicting with gh-pages inherent Jekyll architecture.
+    // The fix consists of scramling the Liqid tages.
+    // The scrambled .md file is committed in this project rep,
+    // and this task writes an unscrampled version into ../defualt.github.com/_posts/
+
     var blogSuffix = '-'+grunt.config.data.pkg.name+'.md';
+    var existingPath = grunt.file.expand('../defualt.github.com/_posts/*'+blogSuffix)[0];
     for(var i=0,l=this.filesSrc.length;i<l;i++){
       if(this.filesSrc[i].indexOf(blogSuffix) !== -1){
-        console.log(this.filesSrc[i]);
-        //grunt.file.copy(this.filesSrc[i], '../defualt.github.com/_posts/'+(this.filesSrc[i].replace('.txt','.md')));
-
         var html = grunt.file.read(this.filesSrc[i]);
         html = html.replace(/{x%/g,"{%").replace(/%x}/g,"%}");
-        grunt.file.write('../defualt.github.com/_posts/'+(this.filesSrc[i].replace('.md','.md')),html);
+        if(typeof existingPath === 'undefined'){
+          var pathToWrite = '../defualt.github.com/_posts/'+this.filesSrc[i];
+        } else {
+          var pathToWrite = existingPath;
+        }
+        console.log(pathToWrite)
+        grunt.file.write(pathToWrite,html);
         //grunt.file.delete(this.filesSrc[i]);
         break;
       }
     }
-
-    //grunt.file.write('asdf.js', 'asdf' )
-    //grunt.file.copy('asdf.js', 'zxcv.js' )
-
   });
 
   grunt.registerMultiTask('asdf', 'Validate files with JSHint.', function() {
