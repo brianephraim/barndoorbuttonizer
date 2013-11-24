@@ -91,11 +91,15 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('qwer', 'Validate files with JSHint.', function() {
     console.log('zxcvzxcv')
     //console.log(grunt.file.expand('../defualt.github.com/_posts/*'));
-    var blogSuffix = '-'+grunt.config.data.pkg.name+'.txt';
+    var blogSuffix = '-'+grunt.config.data.pkg.name+'.md';
     for(var i=0,l=this.filesSrc.length;i<l;i++){
       if(this.filesSrc[i].indexOf(blogSuffix) !== -1){
         console.log(this.filesSrc[i]);
-        grunt.file.copy(this.filesSrc[i], '../defualt.github.com/_posts/'+(this.filesSrc[i].replace('.txt','.md')));
+        //grunt.file.copy(this.filesSrc[i], '../defualt.github.com/_posts/'+(this.filesSrc[i].replace('.txt','.md')));
+
+        var html = grunt.file.read(this.filesSrc[i]);
+        html = html.replace(/{x%/g,"{%").replace(/%x}/g,"%}");
+        grunt.file.write('../defualt.github.com/_posts/'+(this.filesSrc[i].replace('.md','.md')),html);
         //grunt.file.delete(this.filesSrc[i]);
         break;
       }
@@ -122,7 +126,6 @@ module.exports = function(grunt) {
     };
     var jsContent = grunt.template.process(jsTemplate, {data: obj}) // 'abcde'
     grunt.file.write('js/appHtml.js', jsContent )
-    grunt
     //var html = grunt.file.read(this.filesSrc[0]);
     // var $html = $(html);
     // var $div = $('<div></div>');
