@@ -10,7 +10,14 @@
 	//EXPECTS <whatev class="catSlides"></whatev> in the DOM
 	var app = function($,barndoorbuttonizer){
 		var html = '<%= appHtml %>';
-		console.log(html)
+		if(document.location.host === 'localhost:4000'){
+			html = html.replace('$@$rootPathReplaceString$@$','http://localhost:8000/barndoorbuttonizer/')
+		} else if (document.location.host === 'defualt.github.io'){
+			html = html.replace('$@$rootPathReplaceString$@$','/barndoorbuttonizer/')
+		} else if (document.location.origin === 'file://'){
+			html = html.replace('$@$rootPathReplaceString$@$','')
+			console.log(html)
+		}
 		return html;
 	};
 
