@@ -7,6 +7,7 @@
 	}
 
 	var makeBarndoorbuttonizerObject = function($){
+		console.log(require.s.contexts._.defined)
 		console.log('makeBarndoorbuttonizerObject')
 		var barndoorbuttonizer = function(options){
 //00000000
