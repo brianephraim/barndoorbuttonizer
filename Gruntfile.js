@@ -7,7 +7,7 @@ module.exports = function(grunt) {
       all: ['lib/*']
     },
     blog: {
-      all: ['*']
+      all: ['grunt-templates/*']
     },
     htmlConvert: {
       options: {
@@ -101,9 +101,14 @@ module.exports = function(grunt) {
 
     var blogSuffix = '-'+grunt.config.data.pkg.name+'.md';
     var existingPath = grunt.file.expand('../defualt.github.com/_posts/*'+blogSuffix)[0];
+    console.log(existingPath)
+    console.log(blogSuffix)
+    console.log(this.filesSrc)
     for(var i=0,l=this.filesSrc.length;i<l;i++){
       if(this.filesSrc[i].indexOf(blogSuffix) !== -1){
+        console.log('asdf')
         var html = grunt.file.read(this.filesSrc[i]);
+        console.log(html)
         html = html.replace(/{x%/g,"{%").replace(/%x}/g,"%}");
         if(typeof existingPath === 'undefined'){
           var pathToWrite = '../defualt.github.com/_posts/'+this.filesSrc[i];
