@@ -11,9 +11,9 @@
 	var app = function($,barndoorbuttonizer){
 		var html = '<h1 align=center>Single-image barndoor button generator</h1><p>Click this image to use it as a sample: <img src="$@$rootPathReplaceString$@$cloud.png" class="cloud" /> . See if you can get the red, green, and blue lines to repeat!</p><DIV id="barndoorbuttonizerStatus">Or drag an image from you hard drive to the area below ...</DIV><DIV id="barndoorbuttonizerDrop">Drop files here.</DIV><DIV id="barndoorbuttonizerList"></DIV>';
 		if(document.location.host === 'localhost:4000'){
-			html = html.replace('$@$rootPathReplaceString$@$','http://localhost:8000/barndoorbuttonizer/')
+			html = html.replace('$@$rootPathReplaceString$@$','http://localhost:8000/barndoorbuttonizer/app/')
 		} else if (document.location.host === 'defualt.github.io'){
-			html = html.replace('$@$rootPathReplaceString$@$','/barndoorbuttonizer/')
+			html = html.replace('$@$rootPathReplaceString$@$','/barndoorbuttonizer/app/')
 		} else if (document.location.origin === 'file://'){
 			html = html.replace('$@$rootPathReplaceString$@$','')
 
